@@ -59,10 +59,10 @@ exports.updateWorkoutLog = async (req,res) =>{
         const {duration, notes} = req.body;
 
         //console.log("Received ID in backend:", logId)
-        const updatedLog = await WorkoutLog.findByIdAndUpdate(
-            {_id:logId},
-            {duration,notes},
-            {new:true}
+        const updatedLog = await WorkoutLog.findOneAndUpdate(
+            {_id: logId, userId: req.user.userId},
+            {duration, notes},
+            {new: true}
         );
         //console.log("Updated Log:", updatedLog); 
         //console.log("Received Data:", { duration, notes })
