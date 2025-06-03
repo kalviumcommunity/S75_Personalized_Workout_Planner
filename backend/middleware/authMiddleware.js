@@ -9,7 +9,7 @@ const authMiddleware = async(req,res,next)=>{
     const token = authHeader;
 
     try{
-        const decode = await jwt.verify(token.replace("Bearer ",""),process.env.JWT_SECRET);
+        const decode = jwt.verify(token.replace("Bearer ",""),process.env.JWT_SECRET);
         req.user = decode;
         //console.log(decode);
         next();
