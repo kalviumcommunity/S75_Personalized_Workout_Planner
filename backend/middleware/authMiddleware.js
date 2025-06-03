@@ -2,10 +2,11 @@ const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
 const authMiddleware = async(req,res,next)=>{
-    const token = req.header("Authorization");
-    if(!token){
-        return res.status(401).json({message : "Access denied. No token provided."})
+    const authHeader = req.header("Authorization");
+    if(!authHeader || !authHeader.startsWith('Bearer ')){
+        return res.status(401).json({message : "Access denied. No token or invalid format provided."})
     }
+    const token = authHeader;
 
     try{
         const decode = await jwt.verify(token.replace("Bearer ",""),process.env.JWT_SECRET);
